@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Becca Brow Collection — Launch Dashboard</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FAF8F6;color:#1A1A1A;font-size:14px}
+.hero{background:linear-gradient(135deg,#1A1A1A 0%,#2d2d2d 100%);color:#FFFFFF;padding:32px 40px 24px;display:flex;align-items:center;justify-content:space-between}
+.hero-left h1{font-size:26px;font-weight:700;letter-spacing:.5px;margin-bottom:4px}
+.hero-left h2{font-size:16px;font-weight:400;color:#C4A882;margin-bottom:10px}
+.hero-meta span{font-size:12px;color:#aaa;margin-right:18px}
+.hero-meta span strong{color:#EDE3D6}
+.hero-right{text-align:right}
+.tc-logo{font-size:13px;color:#C4A882;letter-spacing:1px;text-transform:uppercase}
+.launch-badge{display:inline-block;margin-top:8px;background:#C4A882;color:#1A1A1A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.tab-bar{display:flex;background:#1A1A1A;padding:0 40px;border-bottom:2px solid #C4A882}
+.tab-btn{padding:12px 20px;color:#aaa;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s}
+.tab-btn.active{color:#C4A882;border-bottom-color:#C4A882}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;padding:24px 40px}
+.kpi-card{background:#FFFFFF;border-radius:10px;padding:18px 20px;border:1px solid #F2EDE7;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.kpi-card .label{font-size:11px;color:#8A8481;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.kpi-card .value{font-size:24px;font-weight:700;color:#1A1A1A}
+.kpi-card .sub{font-size:11px;color:#8A8481;margin-top:4px}
+.kpi-card.highlight .value{color:#B84040}
+.section{padding:8px 40px 32px}
+.section-title{font-size:15px;font-weight:700;border-left:4px solid #C4A882;padding-left:10px;margin-bottom:16px;margin-top:8px}
+.tc-table{width:100%;border-collapse:collapse;font-size:13px}
+.tc-table th{background:#1A1A1A;color:#EDE3D6;padding:9px 12px;text-align:left;font-weight:600;font-size:11px;letter-spacing:.5px}
+.tc-table th.num,.tc-table td.num{text-align:right}
+.tc-table td{padding:9px 12px;border-bottom:1px solid #F2EDE7;vertical-align:middle}
+.tc-table tr:hover td{background:#F2EDE7}
+.tc-table .total-row td{background:#F2EDE7;font-weight:700;border-top:2px solid #C4A882}
+.tc-table .future-row td{color:#8A8481;font-style:italic}
+.day-col{white-space:nowrap;font-size:12px;color:#8A8481}
+.day-col small{display:block;font-size:11px}
+.sku-header{text-align:center;border-left:1px solid #333;font-size:12px}
+.muted{color:#8A8481}
+.badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
+.badge-green{background:#4A7C5920;color:#4A7C59;border:1px solid #4A7C5940}
+.badge-orange{background:#C0784020;color:#C07840;border:1px solid #C0784040}
+.badge-red{background:#B8404020;color:#B84040;border:1px solid #B8404040}
+.badge-none{background:#F2EDE7;color:#8A8481;border:1px solid #ddd}
+.wip-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:8px 40px 32px}
+.wip-card{background:#FFFFFF;border:1px dashed #C4A882;border-radius:10px;padding:32px;text-align:center;color:#8A8481}
+.wip-card h3{color:#1A1A1A;margin-bottom:8px;font-size:14px}
+.wip-card p{font-size:12px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.table-wrap{overflow-x:auto;border-radius:8px;border:1px solid #F2EDE7}
+footer{text-align:center;padding:20px;font-size:11px;color:#8A8481;border-top:1px solid #F2EDE7;margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <h1>Becca Brow Collection</h1>
+    <h2>Silver Grey &mdash; Launch Performance Dashboard</h2>
+    <div class="hero-meta">
+      <span>Launch Date: <strong>June 8, 2026</strong></span>
+      <span>Day: <strong>1 of 120</strong></span>
+      <span>SKUs: <strong>TVG6710 &middot; TVG6680 &middot; TVG6690</strong></span>
+      <span>Tier: <strong>A</strong></span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="tc-logo">Thrive Causemetics</div>
+    <div class="launch-badge">Day 1 Results</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('launch',this)">Launch Performance</button>
+  <button class="tab-btn" onclick="switchTab('insights',this)">Performance &amp; Acquisition</button>
+</div>
+
+<div id="tab-launch" class="tab-content active">
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="label">Day 1 Plan (Total)</div>
+      <div class="value">699</div>
+      <div class="sub">Units across 3 SKUs</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">120-Day Plan (Total)</div>
+      <div class="value">27,317</div>
+      <div class="sub">Units across 3 SKUs</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">Day 1 Actual Units</div>
+      <div class="value">46</div>
+      <div class="sub">45 orders</div>
+    </div>
+    <div class="kpi-card">
+      <div class="label">Day 1 Net Sales</div>
+      <div class="value">$1,060.26</div>
+      <div class="sub">June 8, 2026</div>
+    </div>
+    <div class="kpi-card highlight">
+      <div class="label">% to Goal (Day 1)</div>
+      <div class="value">6.6%</div>
+      <div class="sub">vs 699-unit Day 1 plan</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">SKU Performance Summary &mdash; Day 1 (June 8)</div>
+    <div class="table-wrap">
+      <table class="tc-table">
+        <thead>
+          <tr>
+            <th>SKU / Franchise</th>
+            <th class="num">Day 1 Plan</th>
+            <th class="num">Day 1 Actual</th>
+            <th class="num">% to Goal</th>
+            <th class="num">Net Sales</th>
+            <th class="num">Orders</th>
+            <th class="num">120d Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><strong>TVG6710</strong><br><small class="muted">Infinity Waterproof Eyebrow Liner</small></td>
+      <td class="num">414</td>
+      <td class="num">12</td>
+      <td class="num"><span class="badge badge-red">2.9%</span></td>
+      <td class="num">$264.36</td>
+      <td class="num">12</td>
+      <td class="num">13,077</td>
+    </tr>    <tr>
+      <td><strong>TVG6680</strong><br><small class="muted">Quick Fill Eyebrow Pencil</small></td>
+      <td class="num">88</td>
+      <td class="num">14</td>
+      <td class="num"><span class="badge badge-red">15.9%</span></td>
+      <td class="num">$342.92</td>
+      <td class="num">13</td>
+      <td class="num">4,486</td>
+    </tr>    <tr>
+      <td><strong>TVG6690</strong><br><small class="muted">Instant Brow Fix Semi-Permanent Eyebrow Gel</small></td>
+      <td class="num">197</td>
+      <td class="num">20</td>
+      <td class="num"><span class="badge badge-red">10.2%</span></td>
+      <td class="num">$452.98</td>
+      <td class="num">20</td>
+      <td class="num">9,754</td>
+    </tr>
+          <tr class="total-row">
+            <td><strong>Total &mdash; Becca Brow Collection</strong></td>
+            <td class="num">699</td>
+            <td class="num">46</td>
+            <td class="num"><span class="badge badge-red">6.6%</span></td>
+            <td class="num">$1,060.26</td>
+            <td class="num">45</td>
+            <td class="num">27,317</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Launch Forecast &amp; Actuals &mdash; First 14 Days</div>
+    <div class="table-wrap">
+      <table class="tc-table">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th colspan="3" class="sku-header">TVG6710<br><small>Infinity Waterproof Eyebro…</small></th><th colspan="3" class="sku-header">TVG6680<br><small>Quick Fill Eyebrow Pencil</small></th><th colspan="3" class="sku-header">TVG6690<br><small>Instant Brow Fix Semi-Perm…</small></th>
+          </tr>
+          <tr style="background:#111;">
+            <th></th>
+            <th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th><th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th><th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr class=""><td class="day-col">Day 1<br><small>Jun 08</small></td><td class="num">414</td><td class="num">12</td><td class="num"><span class="badge badge-red">2.9%</span></td><td class="num">88</td><td class="num">14</td><td class="num"><span class="badge badge-red">15.9%</span></td><td class="num">197</td><td class="num">20</td><td class="num"><span class="badge badge-red">10.2%</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 2<br><small>Jun 09</small></td><td class="num">214</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">94</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">124</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 3<br><small>Jun 10</small></td><td class="num">181</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">114</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 4<br><small>Jun 11</small></td><td class="num">131</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">94</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">97</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 5<br><small>Jun 12</small></td><td class="num">132</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">80</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">106</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 6<br><small>Jun 13</small></td><td class="num">123</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">109</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">97</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 7<br><small>Jun 14</small></td><td class="num">125</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">105</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">85</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 8<br><small>Jun 15</small></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">73</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">92</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 9<br><small>Jun 16</small></td><td class="num">81</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">78</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">68</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 10<br><small>Jun 17</small></td><td class="num">95</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">86</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">73</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 11<br><small>Jun 18</small></td><td class="num">88</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">79</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">70</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 12<br><small>Jun 19</small></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">66</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">84</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 13<br><small>Jun 20</small></td><td class="num">140</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">118</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">106</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+<tr class="future-row"><td class="day-col">Day 14<br><small>Jun 21</small></td><td class="num">151</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">113</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">98</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:#8A8481;margin-top:8px;padding-left:4px;">
+      Italicized rows = future dates. Plan from Google Sheet &ldquo;SKU Launch Day Forecast&rdquo; tab.
+    </p>
+  </div>
+
+</div>
+
+<div id="tab-insights" class="tab-content">
+  <div style="background:#EDE3D6;border:1px solid #C4A882;border-radius:8px;padding:12px 18px;margin:20px 40px;font-size:13px;">
+    <strong>Coming soon:</strong> Performance &amp; Acquisition insights will populate as more orders accumulate. Panels below are placeholders.
+  </div>
+  <div class="wip-grid">
+<div class="wip-card"><h3>Customer Persona Breakdown</h3><p>New vs Returning customer split for each SKU. More data needed as orders accumulate.</p></div>
+<div class="wip-card"><h3>Single vs Multi-Item Orders</h3><p>Order composition — how many customers bought Becca Brow as sole item vs. with other products.</p></div>
+<div class="wip-card"><h3>Average Order Value by Persona</h3><p>AOV segmented by new vs returning buyers.</p></div>
+<div class="wip-card"><h3>Top Co-Purchased Products</h3><p>Which other Thrive Causemetics SKUs are most frequently purchased alongside Becca Brow.</p></div>
+<div class="wip-card"><h3>Channel Performance</h3><p>Revenue and units by acquisition channel (email, paid social, organic, etc.).</p></div>
+<div class="wip-card"><h3>Geographic Performance</h3><p>Top states/provinces by units sold.</p></div>
+
+  </div>
+</div>
+
+<footer>
+  Thrive Causemetics &mdash; Internal Use Only &nbsp;&middot;&nbsp; Actuals: June 8, 2026 (Snowflake / DAASITY_DB) &nbsp;&middot;&nbsp;
+  <strong>Confidential &mdash; Do not distribute externally</strong>
+</footer>
+
+<script>
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(el){el.classList.remove('active')});
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
