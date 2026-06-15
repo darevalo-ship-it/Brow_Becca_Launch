@@ -1,192 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Becca Brow Collection — Launch Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FAF8F6;color:#1A1A1A;font-size:14px}
-.hero{background:linear-gradient(135deg,#1A1A1A 0%,#2d2d2d 100%);color:#fff;padding:32px 40px 24px;display:flex;align-items:center;justify-content:space-between}
-.hero-left h1{font-size:26px;font-weight:700;letter-spacing:.5px;margin-bottom:4px}
-.hero-left h2{font-size:16px;font-weight:400;color:#C4A882;margin-bottom:10px}
-.hero-meta span{font-size:12px;color:#aaa;margin-right:18px}
-.hero-meta span strong{color:#EDE3D6}
-.hero-right{text-align:right}
-.tc-logo{font-size:13px;color:#C4A882;letter-spacing:1px;text-transform:uppercase}
-.pill{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
-.pill-gold{background:#C4A882;color:#1A1A1A}
-.pill-outline{background:transparent;color:#C4A882;border:1px solid #C4A882;margin-left:5px}
-.tab-bar{display:flex;background:#1A1A1A;padding:0 40px;border-bottom:2px solid #C4A882}
-.tab-btn{padding:12px 20px;color:#aaa;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s}
-.tab-btn.active{color:#C4A882;border-bottom-color:#C4A882}
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;padding:24px 40px}
-.kpi-card{background:#fff;border-radius:10px;padding:18px 20px;border:1px solid #F2EDE7;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.kpi-card .label{font-size:11px;color:#8A8481;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
-.kpi-card .value{font-size:24px;font-weight:700;color:#1A1A1A}
-.kpi-card .sub{font-size:11px;color:#8A8481;margin-top:4px}
-.kpi-card.highlight .value{color:#B84040}
-.section{padding:8px 40px 32px}
-.section-title{font-size:15px;font-weight:700;border-left:4px solid #C4A882;padding-left:10px;margin-bottom:16px;margin-top:8px}
-.tc-table{width:100%;border-collapse:collapse;font-size:13px}
-.tc-table th{background:#1A1A1A;color:#EDE3D6;padding:9px 12px;text-align:left;font-weight:600;font-size:11px;letter-spacing:.5px}
-.tc-table th.num,.tc-table td.num{text-align:right}
-.tc-table td{padding:9px 12px;border-bottom:1px solid #F2EDE7;vertical-align:middle}
-.tc-table tr:hover td{background:#F2EDE7}
-.tc-table .total-row td{background:#F2EDE7;font-weight:700;border-top:2px solid #C4A882}
-.tc-table .future-row td{color:#8A8481;font-style:italic}
-.day-col{white-space:nowrap;font-size:12px;color:#8A8481}
-.day-col small{display:block;font-size:11px}
-.day-label{background:#C4A882;color:#1A1A1A;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;text-transform:uppercase;letter-spacing:.3px}
-.sku-header{text-align:center;border-left:1px solid #333;font-size:12px}
-.muted{color:#8A8481}
-.badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
-.badge-green{background:#4A7C5920;color:#4A7C59;border:1px solid #4A7C5940}
-.badge-orange{background:#C0784020;color:#C07840;border:1px solid #C0784040}
-.badge-red{background:#B8404020;color:#B84040;border:1px solid #B8404040}
-.badge-none{background:#F2EDE7;color:#8A8481;border:1px solid #ddd}
-.notice{background:#EDE3D6;border:1px solid #C4A882;border-radius:8px;padding:12px 18px;margin:20px 40px;font-size:13px}
-.wip-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:8px 40px 32px}
-.wip-card{background:#fff;border:1px dashed #C4A882;border-radius:10px;padding:32px;text-align:center;color:#8A8481}
-.wip-card h3{color:#1A1A1A;margin-bottom:8px;font-size:14px}
-.wip-card p{font-size:12px}
-.tab-content{display:none}
+.header{background:#1A1A1A;color:#EDE3D6;padding:28px 40px;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:20px;font-weight:600;letter-spacing:.5px}
+.header .sub{font-size:12px;color:#C4A882;margin-top:4px}
+.header .tag{background:#C4A882;color:#1A1A1A;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
+.tabs{background:#fff;border-bottom:1px solid #EDE3D6;padding:0 40px;display:flex}
+.tab{padding:14px 20px;cursor:pointer;font-size:13px;font-weight:500;color:#8A8481;border-bottom:2px solid transparent;transition:all .15s}
+.tab.active{color:#1A1A1A;border-bottom-color:#C4A882}
+.tab:hover:not(.active){color:#1A1A1A}
+.tab-content{display:none;padding:32px 40px}
 .tab-content.active{display:block}
-.table-wrap{overflow-x:auto;border-radius:8px;border:1px solid #F2EDE7}
-footer{text-align:center;padding:20px;font-size:11px;color:#8A8481;border-top:1px solid #F2EDE7;margin-top:16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi{background:#fff;border:1px solid #EDE3D6;border-radius:8px;padding:20px}
+.kpi-label{font-size:11px;color:#8A8481;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:700;color:#1A1A1A}
+.kpi-sub{font-size:11px;color:#8A8481;margin-top:4px}
+.section{background:#fff;border:1px solid #EDE3D6;border-radius:8px;margin-bottom:20px;overflow:hidden}
+.section-hdr{padding:16px 20px;border-bottom:1px solid #EDE3D6;font-weight:600;font-size:13px;background:#F2EDE7}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:8px 12px;font-size:11px;color:#8A8481;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #EDE3D6;background:#FAF8F6}
+td{padding:10px 12px;border-bottom:1px solid #F2EDE7;font-size:13px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAF8F6}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-green{background:#d4edda;color:#155724}
+.badge-orange{background:#fff3cd;color:#856404}
+.badge-red{background:#f8d7da;color:#721c24}
+.badge-none{background:#f2f2f2;color:#6c757d}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.chart-wrap{position:relative;height:260px}
+.insight-card{background:#fff;border:1px solid #EDE3D6;border-radius:8px;overflow:hidden}
+.insight-title{padding:16px 20px;border-bottom:1px solid #EDE3D6;font-weight:600;font-size:13px;background:#F2EDE7}
+.insight-body{padding:20px}
+.delta.pos{color:#155724;font-weight:600}
+.delta.neg{color:#721c24;font-weight:600}
+.goal-banner{background:linear-gradient(135deg,#1A1A1A 0%,#333 100%);color:#EDE3D6;border-radius:8px;padding:24px;margin-bottom:20px}
+.goal-banner h3{font-size:15px;font-weight:600;margin-bottom:4px;color:#C4A882}
+.goal-banner p{font-size:12px;color:#EDE3D6;opacity:.85;margin-bottom:16px}
+.goal-meta{display:flex;gap:24px;margin-bottom:12px;flex-wrap:wrap}
+.goal-stat .val{font-size:20px;font-weight:700;color:#EDE3D6}
+.goal-stat .lbl{font-size:10px;color:#C4A882;text-transform:uppercase;letter-spacing:.5px}
+.progress-bar-wrap{background:rgba(255,255,255,.15);border-radius:4px;height:10px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:4px;background:#C97D73}
+.progress-label{font-size:11px;color:#C4A882;margin-top:6px}
+.note{font-size:11px;color:#8A8481;font-style:italic;padding-bottom:24px}
+.section-mb{margin-bottom:20px}
 </style>
 </head>
 <body>
-<div class="hero">
-  <div class="hero-left">
-    <h1>Becca Brow Collection</h1>
-    <h2>Silver Grey &mdash; Launch Performance Dashboard</h2>
-    <div class="hero-meta">
-      <span>VIP Launch: <strong>June 8, 2026</strong></span>
-      <span>Full Launch: <strong>June 9, 2026</strong></span>
-      <span>SKUs: <strong>TVG6710 &middot; TVG6680 &middot; TVG6690</strong></span>
-      <span>Tier: <strong>A</strong></span>
-    </div>
+
+<div class="header">
+  <div>
+    <div class="sub">Thrive Causemetics — Internal Dashboard · Confidential</div>
+    <h1>Becca Brow Collection Launch · Silver Grey Shades</h1>
+    <div class="sub">Jun 8 (VIP) – Jun 14 · US Store Only · Updated Jun 15, 2026</div>
   </div>
-  <div class="hero-right">
-    <div class="tc-logo">Thrive Causemetics</div>
-    <span class="pill pill-gold">3 Days Live</span>
-    <span class="pill pill-outline">Jun 8 &ndash; Jun 10</span>
-  </div>
+  <div class="tag">7-Day Report</div>
 </div>
 
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('launch',this)">Launch Performance</button>
-  <button class="tab-btn" onclick="switchTab('insights',this)">Performance &amp; Acquisition</button>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('launch',this)">Launch Performance</div>
+  <div class="tab" onclick="showTab('insights',this)">Brow Franchise Insights</div>
 </div>
 
 <div id="tab-launch" class="tab-content active">
-
-  <div class="notice">
-    <strong>3-Day Snapshot (Jun 8–10, 2026):</strong> Jun 8 = VIP-only &middot; Jun 9 = Full public launch &middot; Jun 10 = Day 3. Actuals are US store only — no CA orders recorded yet for these SKUs. Forecast US/CA split not available in Google Sheet for Becca SKUs.
-  </div>
-
   <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="label">3-Day Plan</div>
-      <div class="value">1,498</div>
-      <div class="sub">Jun 8 + 9 + 10 combined</div>
+    <div class="kpi">
+      <div class="kpi-label">Total Units Sold</div>
+      <div class="kpi-value">1,447</div>
+      <div class="kpi-sub">Plan: 3,270 · <span class="badge badge-red">44.3%</span></div>
     </div>
-    <div class="kpi-card">
-      <div class="label">120-Day Plan</div>
-      <div class="value">27,773</div>
-      <div class="sub">Units across 3 SKUs</div>
+    <div class="kpi">
+      <div class="kpi-label">Net Revenue</div>
+      <div class="kpi-value">$33,214</div>
+      <div class="kpi-sub">Jun 8–14 cumulative</div>
     </div>
-    <div class="kpi-card">
-      <div class="label">3-Day Actual Units</div>
-      <div class="value">474</div>
-      <div class="sub">453 orders</div>
+    <div class="kpi">
+      <div class="kpi-label">Total Orders</div>
+      <div class="kpi-value">1,377</div>
+      <div class="kpi-sub">Unique orders placed</div>
     </div>
-    <div class="kpi-card">
-      <div class="label">3-Day Net Sales</div>
-      <div class="value">$10,282.80</div>
-      <div class="sub">Jun 8–10 combined</div>
-    </div>
-    <div class="kpi-card highlight">
-      <div class="label">% to Goal (3-Day)</div>
-      <div class="value">31.6%</div>
-      <div class="sub">vs 1,498-unit 3-day plan</div>
+    <div class="kpi">
+      <div class="kpi-label">Avg Order Value</div>
+      <div class="kpi-value">$24.12</div>
+      <div class="kpi-sub">Net sales ÷ orders</div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-title">SKU Performance — Jun 8 (VIP) &middot; Jun 9 (Launch) &middot; Jun 10 (Day 3)</div>
-    <div class="table-wrap">
-      <table class="tc-table">
-        <thead>
-          <tr>
-            <th rowspan="2">SKU / Franchise</th>
-            <th colspan="3" class="sku-header" style="background:#1a1a1a;">Jun 8 &mdash; VIP</th>
-            <th colspan="3" class="sku-header" style="background:#1a1a1a;">Jun 9 &mdash; Full Launch</th>
-            <th colspan="3" class="sku-header" style="background:#1a1a1a;">Jun 10 &mdash; Day 3</th>
-            <th colspan="5" class="sku-header" style="background:#1a1a1a;">Cumulative (3 Days)</th>
-          </tr>
-          <tr style="background:#111;">
-            <th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th>
-            <th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th>
-            <th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th>
-            <th class="num">Units</th><th class="num">% to Goal</th><th class="num">Net Sales</th><th class="num">Orders</th><th class="num">120d Plan</th>
-          </tr>
-        </thead>
-        <tbody>
-<tr><td><strong>TVG6710</strong><br><small class="muted">Infinity Waterproof Eyebrow Liner</small></td><td class="num">114</td><td class="num">12</td><td class="num"><span class="badge badge-red">10.5%</span></td><td class="num">364</td><td class="num">46</td><td class="num"><span class="badge badge-red">12.6%</span></td><td class="num">311</td><td class="num">29</td><td class="num"><span class="badge badge-red">9.3%</span></td><td class="num">87</td><td class="num"><span class="badge badge-red">11.0%</span></td><td class="num">$1,585.69</td><td class="num">79</td><td class="num">13,377</td></tr><tr><td><strong>TVG6680</strong><br><small class="muted">Quick Fill Eyebrow Pencil</small></td><td class="num">40</td><td class="num">14</td><td class="num"><span class="badge badge-red">35.0%</span></td><td class="num">118</td><td class="num">59</td><td class="num"><span class="badge badge-red">50.0%</span></td><td class="num">124</td><td class="num">90</td><td class="num"><span class="badge badge-orange">72.6%</span></td><td class="num">163</td><td class="num"><span class="badge badge-red">57.8%</span></td><td class="num">$3,979.21</td><td class="num">155</td><td class="num">4,535</td></tr><tr><td><strong>TVG6690</strong><br><small class="muted">Instant Brow Fix Semi-Permanent Eyebrow Gel</small></td><td class="num">90</td><td class="num">20</td><td class="num"><span class="badge badge-red">22.2%</span></td><td class="num">177</td><td class="num">109</td><td class="num"><span class="badge badge-red">61.6%</span></td><td class="num">160</td><td class="num">95</td><td class="num"><span class="badge badge-red">59.4%</span></td><td class="num">224</td><td class="num"><span class="badge badge-red">52.5%</span></td><td class="num">$4,717.90</td><td class="num">219</td><td class="num">9,861</td></tr>
-          <tr class="total-row"><td><strong>Total &mdash; Becca Brow Collection</strong></td><td class="num">244</td><td class="num">46</td><td class="num"><span class="badge badge-red">18.9%</span></td><td class="num">659</td><td class="num">214</td><td class="num"><span class="badge badge-red">32.5%</span></td><td class="num">595</td><td class="num">214</td><td class="num"><span class="badge badge-red">36.0%</span></td><td class="num">474</td><td class="num"><span class="badge badge-red">31.6%</span></td><td class="num">$10,282.80</td><td class="num">453</td><td class="num">27,773</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="section section-mb">
+    <div class="section-hdr">Cumulative 7-Day Performance by SKU</div>
+    <table>
+      <thead><tr><th>SKU</th><th>Actual Units</th><th>Plan Units</th><th>% to Goal</th><th>Net Sales</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>TVG6680</strong><br><small style="color:#8A8481">Brow Fix Gel – Silver Grey</small></td>
+          <td>565</td><td>723</td><td><span class="badge badge-orange">78.1%</span></td><td>$13,984.63</td>
+        </tr>
+        <tr>
+          <td><strong>TVG6690</strong><br><small style="color:#8A8481">Liner – Silver Grey</small></td>
+          <td>605</td><td>927</td><td><span class="badge badge-red">65.3%</span></td><td>$13,381.07</td>
+        </tr>
+        <tr>
+          <td><strong>TVG6710</strong><br><small style="color:#8A8481">Quick Fill – Silver Grey</small></td>
+          <td>277</td><td>1,620</td><td><span class="badge badge-red">17.1%</span></td><td>$5,848.39</td>
+        </tr>
+        <tr style="background:#F2EDE7;font-weight:600">
+          <td>TOTAL</td><td>1,447</td><td>3,270</td>
+          <td><span class="badge badge-red">44.3%</span></td><td>$33,214.09</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="section">
-    <div class="section-title">Daily Forecast &amp; Actuals &mdash; First 14 Days</div>
-    <div class="table-wrap">
-      <table class="tc-table">
-        <thead>
-          <tr><th>Day</th><th colspan="3" class="sku-header">TVG6710<br><small>Infinity Waterproof Eyebro…</small></th><th colspan="3" class="sku-header">TVG6680<br><small>Quick Fill Eyebrow Pencil</small></th><th colspan="3" class="sku-header">TVG6690<br><small>Instant Brow Fix Semi-Perm…</small></th></tr>
-          <tr style="background:#111;"><th></th><th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th><th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th><th class="num">Plan</th><th class="num">Actual</th><th class="num">% Goal</th></tr>
-        </thead>
-        <tbody>
-<tr class=""><td class="day-col">Day 1 <span class="day-label">VIP</span><br><small>Jun 08</small></td><td class="num">114</td><td class="num">12</td><td class="num"><span class="badge badge-red">10.5%</span></td><td class="num">40</td><td class="num">14</td><td class="num"><span class="badge badge-red">35.0%</span></td><td class="num">90</td><td class="num">20</td><td class="num"><span class="badge badge-red">22.2%</span></td></tr>
-<tr class=""><td class="day-col">Day 2 <span class="day-label">Launch</span><br><small>Jun 09</small></td><td class="num">364</td><td class="num">46</td><td class="num"><span class="badge badge-red">12.6%</span></td><td class="num">118</td><td class="num">59</td><td class="num"><span class="badge badge-red">50.0%</span></td><td class="num">177</td><td class="num">109</td><td class="num"><span class="badge badge-red">61.6%</span></td></tr>
-<tr class=""><td class="day-col">Day 3 <span class="day-label">Day 3</span><br><small>Jun 10</small></td><td class="num">311</td><td class="num">29</td><td class="num"><span class="badge badge-red">9.3%</span></td><td class="num">124</td><td class="num">90</td><td class="num"><span class="badge badge-orange">72.6%</span></td><td class="num">160</td><td class="num">95</td><td class="num"><span class="badge badge-red">59.4%</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 4<br><small>Jun 11</small></td><td class="num">241</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">112</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">136</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 5<br><small>Jun 12</small></td><td class="num">222</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">96</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">138</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 6<br><small>Jun 13</small></td><td class="num">193</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">119</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">122</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 7<br><small>Jun 14</small></td><td class="num">175</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">114</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 8<br><small>Jun 15</small></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">73</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">92</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 9<br><small>Jun 16</small></td><td class="num">81</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">78</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">68</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 10<br><small>Jun 17</small></td><td class="num">95</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">86</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">73</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 11<br><small>Jun 18</small></td><td class="num">88</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">79</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">70</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 12<br><small>Jun 19</small></td><td class="num">104</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">66</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">84</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 13<br><small>Jun 20</small></td><td class="num">140</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">118</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">106</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-<tr class="future-row"><td class="day-col">Day 14<br><small>Jun 21</small></td><td class="num">151</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">113</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td><td class="num">98</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="badge badge-none">—</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:11px;color:#8A8481;margin-top:8px;padding-left:4px;">
-      Italicized rows = future dates. Plan from Google Sheet &ldquo;SKU Launch Day Forecast&rdquo; tab.
-    </p>
+  <div class="section section-mb">
+    <div class="section-hdr">Daily Sales · Jun 8–14 (All 3 SKUs Combined)</div>
+    <table>
+      <thead><tr><th>Date</th><th>Units</th><th>Plan</th><th>% to Goal</th><th>Net Sales</th><th>Orders</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Jun 8 (VIP)</strong></td>
+          <td>46</td><td>244</td><td><span class="badge badge-red">18.9%</span></td>
+          <td>$1,060.26</td><td>45</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 9</strong></td>
+          <td>206</td><td>659</td><td><span class="badge badge-red">31.3%</span></td>
+          <td>$4,119.44</td><td>198</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 10</strong></td>
+          <td>203</td><td>595</td><td><span class="badge badge-red">34.1%</span></td>
+          <td>$4,693.78</td><td>193</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 11</strong></td>
+          <td>296</td><td>489</td><td><span class="badge badge-red">60.5%</span></td>
+          <td>$6,998.38</td><td>279</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 12</strong></td>
+          <td>198</td><td>456</td><td><span class="badge badge-red">43.4%</span></td>
+          <td>$4,601.07</td><td>186</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 13</strong></td>
+          <td>238</td><td>434</td><td><span class="badge badge-red">54.8%</span></td>
+          <td>$5,586.72</td><td>224</td>
+        </tr>
+        <tr>
+          <td><strong>Jun 14</strong></td>
+          <td>260</td><td>393</td><td><span class="badge badge-red">66.2%</span></td>
+          <td>$6,154.44</td><td>252</td>
+        </tr></tbody>
+    </table>
   </div>
+
+  <p class="note">&#9888; Actuals reflect US store only (thrive-causemetics). No CA orders recorded for Becca SKUs through Jun 14. Plan figures from Google Sheet "SKU Launch Day Forecast" (US+CA combined — no regional split available for these SKUs).</p>
 </div>
 
 <div id="tab-insights" class="tab-content">
-  <div class="notice"><strong>Coming soon:</strong> Insights populate as more orders accumulate.</div>
-  <div class="wip-grid"><div class="wip-card"><h3>Customer Persona Breakdown</h3><p>New vs Returning split — populates as orders accumulate.</p></div><div class="wip-card"><h3>Single vs Multi-Item Orders</h3><p>Order composition analysis.</p></div><div class="wip-card"><h3>Average Order Value by Persona</h3><p>AOV by new vs returning buyers.</p></div><div class="wip-card"><h3>Top Co-Purchased Products</h3><p>Most frequent SKUs bought alongside Becca Brow.</p></div><div class="wip-card"><h3>Channel Performance</h3><p>Revenue by acquisition channel.</p></div><div class="wip-card"><h3>Geographic Performance</h3><p>Top states/provinces by units sold.</p></div></div>
+
+  <div class="goal-banner">
+    <h3>EOY 2026 Brow Goal: 30% Growth (Jun–Dec)</h3>
+    <p>Drive at least 30% unit growth across all brow franchises before EOY 2026 · Baseline: Mar–May 2026 avg · All stores (US + CA)</p>
+    <div class="goal-meta">
+      <div class="goal-stat"><div class="val">92,212</div><div class="lbl">Monthly Baseline</div></div>
+      <div class="goal-stat"><div class="val">119,875</div><div class="lbl">Monthly Target (+30%)</div></div>
+      <div class="goal-stat"><div class="val">74,546</div><div class="lbl">Jun Projected Pace</div></div>
+      <div class="goal-stat"><div class="val">62.2%</div><div class="lbl">vs Monthly Target</div></div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" style="width:62.2%"></div>
+    </div>
+    <div class="progress-label">Jun pace: 74,546 projected units vs 119,875 target · Based on 34,788 units in first 14 days</div>
+  </div>
+
+  <div class="two-col">
+    <div class="insight-card">
+      <div class="insight-title">Monthly Units by Franchise · Jan–Jun 2026</div>
+      <div class="insight-body">
+        <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-title">Weekly Trend · Last 10 Weeks</div>
+      <div class="insight-body">
+        <div class="chart-wrap"><canvas id="weeklyChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="insight-card">
+      <div class="insight-title">WoW: Week of Jun 8 vs Week of Jun 1</div>
+      <div class="insight-body" style="padding:0">
+        <table>
+          <thead><tr><th>Franchise</th><th>Jun 1 Wk</th><th>Jun 8 Wk</th><th>WoW &#916;</th></tr></thead>
+          <tbody>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1A1A1A;margin-right:6px"></span>Infinity Liner</td>
+          <td>3,318</td><td>4,659</td><td class="delta pos">↑ 40.4%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C4A882;margin-right:6px"></span>Quick Fill Pencil</td>
+          <td>2,061</td><td>4,009</td><td class="delta pos">↑ 94.5%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C97D73;margin-right:6px"></span>Semi-Perm Gel</td>
+          <td>8,473</td><td>9,855</td><td class="delta pos">↑ 16.3%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4A7C59;margin-right:6px"></span>Shaping Gel</td>
+          <td>205</td><td>523</td><td class="delta pos">↑ 155.1%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C07840;margin-right:6px"></span>Liquid Brow Lock</td>
+          <td>434</td><td>753</td><td class="delta pos">↑ 73.5%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8A8481;margin-right:6px"></span>Lash & Brow Serum</td>
+          <td>242</td><td>256</td><td class="delta pos">↑ 5.8%</td>
+        </tr>
+            <tr style="background:#F2EDE7;font-weight:600">
+              <td>TOTAL</td><td>14,733</td><td>20,055</td>
+              <td class="delta pos">&#8593; 36.1%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-title">MoM: May vs April</div>
+      <div class="insight-body" style="padding:0">
+        <table>
+          <thead><tr><th>Franchise</th><th>April</th><th>May</th><th>MoM &#916;</th></tr></thead>
+          <tbody>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1A1A1A;margin-right:6px"></span>Infinity Liner</td>
+          <td>16,714</td><td>17,997</td><td class="delta pos">↑ 7.7%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C4A882;margin-right:6px"></span>Quick Fill Pencil</td>
+          <td>12,933</td><td>11,171</td><td class="delta neg">↓ 13.6%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C97D73;margin-right:6px"></span>Semi-Perm Gel</td>
+          <td>51,351</td><td>55,029</td><td class="delta pos">↑ 7.2%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4A7C59;margin-right:6px"></span>Shaping Gel</td>
+          <td>977</td><td>1,114</td><td class="delta pos">↑ 14.0%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C07840;margin-right:6px"></span>Liquid Brow Lock</td>
+          <td>2,402</td><td>2,860</td><td class="delta pos">↑ 19.1%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8A8481;margin-right:6px"></span>Lash & Brow Serum</td>
+          <td>1,249</td><td>1,389</td><td class="delta pos">↑ 11.2%</td>
+        </tr>
+            <tr style="background:#F2EDE7;font-weight:600">
+              <td>TOTAL</td><td>85,626</td><td>89,560</td>
+              <td class="delta pos">↑ 4.6%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-card section-mb">
+    <div class="insight-title">Full Monthly Breakdown · All Franchises</div>
+    <table>
+      <thead><tr>
+        <th>Franchise</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th>
+        <th>Jun* (14d)</th><th>MoM (May/Apr)</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1A1A1A;margin-right:6px"></span><strong>Infinity Liner</strong></td>
+          <td>17,380</td><td>17,423</td><td>18,766</td><td>16,714</td><td>17,997</td><td>7,977 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 7.7%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C4A882;margin-right:6px"></span><strong>Quick Fill Pencil</strong></td>
+          <td>7,449</td><td>7,222</td><td>17,089</td><td>12,933</td><td>11,171</td><td>6,070 <small style="color:#8A8481">14d</small></td>
+          <td class="delta neg">↓ 13.6%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C97D73;margin-right:6px"></span><strong>Semi-Perm Gel</strong></td>
+          <td>64,466</td><td>59,881</td><td>59,334</td><td>51,351</td><td>55,029</td><td>18,328 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 7.2%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4A7C59;margin-right:6px"></span><strong>Shaping Gel</strong></td>
+          <td>1,260</td><td>1,136</td><td>1,220</td><td>977</td><td>1,114</td><td>728 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 14.0%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C07840;margin-right:6px"></span><strong>Liquid Brow Lock</strong></td>
+          <td>3,217</td><td>2,968</td><td>3,479</td><td>2,402</td><td>2,860</td><td>1,187 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 19.1%</td>
+        </tr>
+        <tr>
+          <td><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8A8481;margin-right:6px"></span><strong>Lash & Brow Serum</strong></td>
+          <td>1,563</td><td>1,974</td><td>1,561</td><td>1,249</td><td>1,389</td><td>498 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 11.2%</td>
+        </tr>
+        <tr style="background:#F2EDE7;font-weight:600">
+          <td>TOTAL</td><td>95,335</td><td>90,604</td><td>101,449</td><td>85,626</td><td>89,560</td>
+          <td>34,788 <small style="color:#8A8481">14d</small></td>
+          <td class="delta pos">↑ 4.6%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">* Jun 2026 reflects 14 days of data (Jun 1–14, all stores). Jun projected pace assumes current daily average held through Jun 30. Franchises updated to include Shaping Gel and Lash &amp; Brow Serum based on latest Snowflake data. Baseline = Mar–May 2026 average (92,212 units/month).</p>
 </div>
 
-<footer>
-  Thrive Causemetics &mdash; Internal Use Only &nbsp;&middot;&nbsp; Actuals: Jun 8–10, 2026 (Snowflake, US store) &nbsp;&middot;&nbsp;
-  Forecast: Google Sheet (updated) &nbsp;&middot;&nbsp; <strong>Confidential &mdash; Do not distribute externally</strong>
-</footer>
-
 <script>
-function switchTab(n,b){
-  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
-  document.getElementById('tab-'+n).classList.add('active'); b.classList.add('active');
+function showTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
 }
+
+new Chart(document.getElementById('monthlyChart'), {
+  type: 'bar',
+  data: {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun*"],
+    datasets: [{label:'Infinity Liner',data:[17380, 17423, 18766, 16714, 17997, 7977],backgroundColor:'rgba(26,26,26,0.8)',borderColor:'#1A1A1A',borderWidth:1},{label:'Quick Fill Pencil',data:[7449, 7222, 17089, 12933, 11171, 6070],backgroundColor:'rgba(196,168,130,0.8)',borderColor:'#C4A882',borderWidth:1},{label:'Semi-Perm Gel',data:[64466, 59881, 59334, 51351, 55029, 18328],backgroundColor:'rgba(201,125,115,0.8)',borderColor:'#C97D73',borderWidth:1},{label:'Shaping Gel',data:[1260, 1136, 1220, 977, 1114, 728],backgroundColor:'rgba(74,124,89,0.8)',borderColor:'#4A7C59',borderWidth:1},{label:'Liquid Brow Lock',data:[3217, 2968, 3479, 2402, 2860, 1187],backgroundColor:'rgba(192,120,64,0.8)',borderColor:'#C07840',borderWidth:1},{label:'Lash & Brow Serum',data:[1563, 1974, 1561, 1249, 1389, 498],backgroundColor:'rgba(138,132,129,0.8)',borderColor:'#8A8481',borderWidth:1},]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}},
+    scales:{
+      x:{stacked:true,grid:{display:false}},
+      y:{stacked:true,ticks:{callback:v=>v>=1000?Math.round(v/1000)+'k':v}}
+    }
+  }
+});
+
+new Chart(document.getElementById('weeklyChart'), {
+  type: 'line',
+  data: {
+    labels: ["04-06", "04-13", "04-20", "04-27", "05-04", "05-11", "05-18", "05-25", "06-01", "06-08"],
+    datasets: [{label:'Infinity Liner',data:[4126, 3688, 4219, 3678, 4347, 3614, 4707, 3793, 3318, 4659],borderColor:'#1A1A1A',backgroundColor:'transparent',pointBackgroundColor:'#1A1A1A',tension:0.3,borderWidth:2},{label:'Quick Fill Pencil',data:[3402, 2164, 2695, 2210, 2495, 2095, 3033, 2498, 2061, 4009],borderColor:'#C4A882',backgroundColor:'transparent',pointBackgroundColor:'#C4A882',tension:0.3,borderWidth:2},{label:'Semi-Perm Gel',data:[11909, 10275, 15178, 11558, 14108, 10434, 14231, 11484, 8473, 9855],borderColor:'#C97D73',backgroundColor:'transparent',pointBackgroundColor:'#C97D73',tension:0.3,borderWidth:2},{label:'Shaping Gel',data:[250, 221, 239, 215, 231, 199, 359, 228, 205, 523],borderColor:'#4A7C59',backgroundColor:'transparent',pointBackgroundColor:'#4A7C59',tension:0.3,borderWidth:2},{label:'Liquid Brow Lock',data:[643, 462, 600, 521, 655, 545, 817, 612, 434, 753],borderColor:'#C07840',backgroundColor:'transparent',pointBackgroundColor:'#C07840',tension:0.3,borderWidth:2},{label:'Lash & Brow Serum',data:[302, 249, 289, 327, 286, 256, 402, 330, 242, 256],borderColor:'#8A8481',backgroundColor:'transparent',pointBackgroundColor:'#8A8481',tension:0.3,borderWidth:2},]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}},
+    scales:{
+      x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{ticks:{callback:v=>v>=1000?Math.round(v/1000)+'k':v}}
+    }
+  }
+});
 </script>
-</body></html>
+</body>
+</html>
